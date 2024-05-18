@@ -15,8 +15,9 @@ public class PoblacionBacterias implements Serializable {
         private int incrementarHastaDia;
         private int[] dosisDiariaAlimento;
         private int[] comida;
+        private String patronAlimento;
 
-        public PoblacionBacterias(String nombre, Date fechaInicio, Date fechaFin, int cantidadInicialBacterias, double temperatura, String condicionesLuz, int comidaInicial, int comidaFinal, int diaComidaDisminuye) {
+        public PoblacionBacterias(String nombre, Date fechaInicio, Date fechaFin, int cantidadInicialBacterias, double temperatura, String condicionesLuz, int comidaInicial, int comidaFinal, int diaComidaDisminuye, String patronAlimento) {
             this.nombre = nombre;
             this.fechaInicio = fechaInicio;
             this.fechaFin = fechaFin;
@@ -28,6 +29,7 @@ public class PoblacionBacterias implements Serializable {
             this.dosisFinalAlimento = dosisFinalAlimento;
             this.dosisDiariaAlimento = calcularDosisDiariaAlimento();
             this.comida = calcularComida(comidaInicial, comidaFinal, diaComidaDisminuye);
+            this.patronAlimento = this.patronAlimento;
         }
 
         private int[] calcularDosisDiariaAlimento() {
@@ -94,5 +96,24 @@ public class PoblacionBacterias implements Serializable {
         public int[] getDosisDiariaAlimento() {
             return dosisDiariaAlimento;
         }
+
+        public int[] getComida() {
+            return comida;
+        }
+
+        public String getPatronAlimento() {
+            return patronAlimento;
+        }
+
+        public void setPatronAlimento(String patronAlimento) {
+            this.patronAlimento = patronAlimento;
+        }
+
+    public int getDuracionExperimento() {
+        long diffInMillies = Math.abs(fechaFin.getTime() - fechaInicio.getTime());
+        long diff = diffInMillies / (24 * 60 * 60 * 1000);
+        return (int) diff;
     }
+
+}
 

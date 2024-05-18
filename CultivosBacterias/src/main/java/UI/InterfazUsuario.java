@@ -130,15 +130,31 @@ public class InterfazUsuario {
                     int dosisInicialAlimento = parseInt(JOptionPane.showInputDialog(frame, "Ingrese la dosis inicial de alimento:"));
                     int dosisFinalAlimento = parseInt(JOptionPane.showInputDialog(frame, "Ingrese la dosis final de alimento:"));
                     int incrementarHastaDia = parseInt(JOptionPane.showInputDialog(frame, "Ingrese el día hasta el que se incrementará la dosis de alimento:"));
-                    PoblacionBacterias poblacion = new PoblacionBacterias(nombrePoblacion, parseDate(fechaInicio), parseDate(fechaFin), cantidadInicialBacterias, temperatura, condicionesLuz, dosisInicialAlimento, dosisFinalAlimento, incrementarHastaDia);
+                    String[] patrones = {"Constante","Incremento lineal", "Constante alternada"};
+                    String patronAlimento = (String) JOptionPane.showInputDialog(frame, "Seleccione el patrón de alimentación:", "Patrón de Alimentación", JOptionPane.QUESTION_MESSAGE, null, patrones, patrones[0]);
+
+                    PoblacionBacterias poblacion = new PoblacionBacterias(nombrePoblacion, parseDate(fechaInicio), parseDate(fechaFin), cantidadInicialBacterias, temperatura, condicionesLuz, dosisInicialAlimento, dosisFinalAlimento, incrementarHastaDia, patronAlimento);
+
                     experimento.agregarPoblacion(poblacion);
                     JOptionPane.showMessageDialog(frame, "Se ha creado una nueva población de bacterias.", "Población Creada", JOptionPane.INFORMATION_MESSAGE);
                     break;
                 case 4:
-                    String[] nombresPoblaciones = experimento.getPoblaciones().stream().map(Datos.PoblacionBacterias::getNombre).toArray(String[]::new);
-                    for (PoblacionBacterias poblacionBacterias : experimento.getPoblaciones()) {
-                        System.out.println(poblacionBacterias.getNombre());
+                    String[] criterios = {"Fecha de inicio", "Nombre", "Cantidad de bacterias"};
+                    String criterio = (String) JOptionPane.showInputDialog(frame, "Seleccione el criterio de ordenación:", "Ordenar por", JOptionPane.QUESTION_MESSAGE, null, criterios, criterios[0]);
+
+                    if (criterio.equals("Fecha de inicio")) {
+                        experimento.ordenarPorFechaInicio();
+                    } else if (criterio.equals("Nombre")) {
+                        experimento.ordenarPorNombre();
+                    } else if (criterio.equals("Cantidad de bacterias")) {
+                        experimento.ordenarPorCantidadBacterias();
                     }
+
+                    StringBuilder nombresPoblaciones = new StringBuilder("Poblaciones:\n");
+                    for (PoblacionBacterias poblacionBacterias : experimento.obtenerPoblaciones()) {
+                        nombresPoblaciones.append(poblacionBacterias.getNombre()).append("\n");
+                    }
+                    JOptionPane.showMessageDialog(frame, nombresPoblaciones.toString(), "Nombres de las Poblaciones", JOptionPane.INFORMATION_MESSAGE);
                     break;
                 case 5:
                     String nombrePoblacioneliminar = JOptionPane.showInputDialog(frame, "Ingrese el nombre de la población de bacterias que desea eliminar:");

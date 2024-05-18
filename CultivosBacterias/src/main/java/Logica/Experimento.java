@@ -2,17 +2,14 @@ package Logica;
 
 import Datos.PoblacionBacterias;
 import java.util.ArrayList;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Comparator;
 
-    public class Experimento implements Serializable {
+public class Experimento implements Serializable {
         private ArrayList<PoblacionBacterias> poblaciones;
         private String descripcion;
         private String nombre;
 
-        // Implementar lógica para el constructor
         public Experimento(String nombre, String descripcion) {
             this.nombre = nombre;
             this.descripcion = descripcion;
@@ -48,7 +45,7 @@ import java.util.Date;
         }
 
         public void agregarPoblacion(PoblacionBacterias nuevaPoblacion) {
-            PoblacionBacterias agregarPoblacion = new PoblacionBacterias(nuevaPoblacion.getNombre(), nuevaPoblacion.getFechaInicio(), nuevaPoblacion.getFechaFin(), nuevaPoblacion.getCantidadInicialBacterias(), nuevaPoblacion.getTemperatura(), nuevaPoblacion.getCondicionesLuz(), nuevaPoblacion.getDosisInicialAlimento(), nuevaPoblacion.getDosisFinalAlimento(), nuevaPoblacion.getIncrementarHastaDia());
+            PoblacionBacterias agregarPoblacion = new PoblacionBacterias(nuevaPoblacion.getNombre(), nuevaPoblacion.getFechaInicio(), nuevaPoblacion.getFechaFin(), nuevaPoblacion.getCantidadInicialBacterias(), nuevaPoblacion.getTemperatura(), nuevaPoblacion.getCondicionesLuz(), nuevaPoblacion.getDosisInicialAlimento(), nuevaPoblacion.getDosisFinalAlimento(), nuevaPoblacion.getIncrementarHastaDia(), nuevaPoblacion.getPatronAlimento());
             poblaciones.add(nuevaPoblacion);
         }
 
@@ -83,5 +80,21 @@ import java.util.Date;
 
         public ArrayList<PoblacionBacterias> obtenerPoblaciones() {
             return poblaciones;
+        }
+
+        public void ordenarPorFechaInicio() {
+            poblaciones.sort(Comparator.comparing(PoblacionBacterias::getFechaInicio));
+        }
+
+        public void ordenarPorFechaFin() {
+            poblaciones.sort(Comparator.comparing(PoblacionBacterias::getFechaFin));
+        }
+
+        public void ordenarPorNombre() {
+            poblaciones.sort(Comparator.comparing(PoblacionBacterias::getNombre));
+        }
+
+        public void ordenarPorCantidadBacterias() {
+            poblaciones.sort(Comparator.comparing(PoblacionBacterias::getCantidadInicialBacterias));
         }
     }
