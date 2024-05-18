@@ -110,6 +110,11 @@ public class InterfazUsuario {
                     experimento = archivos.abrirArchivo(nombreArchivo);
                     if (experimento != null) {
                         JOptionPane.showMessageDialog(frame, "Se ha abierto el archivo correctamente.", "Archivo Abierto", JOptionPane.INFORMATION_MESSAGE);
+                        StringBuilder nombresExperimentos = new StringBuilder("Experimentos:\n");
+                        for (Experimento experimento : experimento.obtenerExperimentos()) {
+                            nombresExperimentos.append(experimento.getNombre()).append("\n");
+                        }
+                        JOptionPane.showMessageDialog(frame, nombresExperimentos.toString(), "Nombres de los Experimentos", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(frame, "No se pudo abrir el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
